@@ -1,0 +1,21 @@
+{
+    "name": "bellesoft/portico-iptv",
+    "description": "IPTV Interface with Portico",
+    "require": {
+        "illuminate/support": "^11.0|^12.0",
+        "php": "^8.1",
+        "illuminate/database": "^11.0|^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bellesoft\\PorticoIptv\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bellesoft\\PorticoIptv\\IPTVServiceProvider"
+            ]
+        }
+    }
+}
