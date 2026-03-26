@@ -7,6 +7,9 @@ use Bellesoft\PorticoIptv\Controllers\RoomController;
 
 Route::prefix('external-api')->group(function () {
     Route::prefix('iptv')->group(function () {
+        Route::get('/health', function () {
+            return response()->json(['status' => 'ok']);
+        });
         Route::get('/rooms/{room}/current-reservation', [RoomController::class, 'currentReservation'])
             ->name('rooms.current-reservation');
     });
