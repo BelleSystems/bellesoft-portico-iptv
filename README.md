@@ -1,3 +1,5 @@
+## About
+A Laravel package that exposes a small external API for IPTV/Portico integrations, allowing IPTV systems to check service health and retrieve the current reservation for a room, with configurable models and eager-loading.
 
 ## Installation
 
