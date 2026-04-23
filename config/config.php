@@ -3,21 +3,47 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Route group options (host-controlled)
+    | Routes
     |--------------------------------------------------------------------------
     |
-    | This package does not enforce any auth/guards. The host application may
-    | provide a prefix/middleware/etc by overriding these values.
+    | This is the prefix for the routes. 
     |
     */
     'routes' => [
-        'prefix' => env('IPTV_ROUTE_PREFIX', 'external-api/iptv'),
-        // Example in host app: ['middleware' => ['auth:external-api']]
+        'prefix' => 'external-api/iptv',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Middlewares
+    |--------------------------------------------------------------------------
+    |
+    | This is the middleware for the routes. You can include multiple middlewares by passing an array.
+    |
+    */
+    'middlewares' => ['auth:external-api'],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Models
+    |--------------------------------------------------------------------------
+    |
+    | This is the models that will be overridden by the host application.
+    |
+    */
     'models' => [
         'reservation' => env('IPTV_RESERVATION_MODEL', Bellesoft\PorticoIptv\Models\Reservation::class),
         'room' => env('IPTV_ROOM_MODEL', Bellesoft\PorticoIptv\Models\Room::class),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Eagerloadables
+    |--------------------------------------------------------------------------
+    |
+    | This is the eagerloadables for the models.
+    |
+    */
     'eagerloadables' => [
         'reservation' => [
             'profile.profileable',
