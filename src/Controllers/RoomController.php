@@ -2,11 +2,7 @@
 
 namespace Bellesoft\PorticoIptv\Controllers;
 
-use Bellesoft\PorticoIptv\Enums\ReservationState;
-use Bellesoft\PorticoIptv\Models\Room;
 use Bellesoft\PorticoIptv\Interface\RoomInterface;
-use Carbon\Carbon;
-use Illuminate\Http\Response;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Bellesoft\PorticoIptv\Controllers\Controller;
@@ -20,11 +16,14 @@ class RoomController extends Controller
         $this->roomInterface = $roomInterface;
     }
 
-    public function currentReservation(int $room)
+    public function currentReservation(int $roomNumber)
     {
         try {
-            
-        $room = Room::query()->findOrFail($room);
+            $room = $this->roomInterface->getByRoomNumber($roomNumber);
+
+            if (!$room) {
+                return $this->notFoundResponse('Room not found');
+            }
 
         $reservation = $this->roomInterface->getCurrentReservation($room);
 
@@ -33,8 +32,7 @@ class RoomController extends Controller
             Log::error('Failed to get queueRooms: '.$e->getMessage());
 
             return $this->errorResponse(
-                'Failed to get current reservation: '.$e->getMessage(),
-                Response::HTTP_INTERNAL_SERVER_ERROR
+                'Failed to get current reservation: ' . $e->getMessage()
             );
         }
     }
