@@ -3,6 +3,7 @@
 namespace Bellesoft\PorticoIptv;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
 use Bellesoft\PorticoIptv\Interface\RoomInterface;
 use Bellesoft\PorticoIptv\Repositories\RoomRepository;
 class IPTVServiceProvider extends ServiceProvider
@@ -27,8 +28,11 @@ class IPTVServiceProvider extends ServiceProvider
             ], 'iptv-config');
         }
         
-        # Load the routes
-        $this->loadRoutesFrom(__DIR__.'/routes/api.php');
+        # Load the routes (host app controls middleware/prefix via config)
+        $routeGroupOptions = (array) config('iptv.routes', []);
+        Route::group($routeGroupOptions, function () {
+            require __DIR__.'/routes/api.php';
+        });
 
         # Bind the room interface to the room repository
         $this->app->bind(RoomInterface::class, RoomRepository::class);
